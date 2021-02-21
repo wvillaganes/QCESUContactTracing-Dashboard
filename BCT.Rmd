@@ -6,3 +6,5 @@ author: 'Covid-19 Report and Analysis'
 ```{r setup,include=FALSE}
 knitr::opts_chunk$set(fig.align = "center", echo = FALSE)
 ```
+
+THIS IS FOR BARANGAY CONTACT TRACERS

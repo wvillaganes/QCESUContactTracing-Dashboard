@@ -7,3 +7,5 @@ author: 'Covid-19 Report and Analysis'
 knitr::opts_chunk$set(fig.align = "center", echo = FALSE)
 
 ```
+
+THIS IS FOR COMMUNITY CONTACT TRACERS
