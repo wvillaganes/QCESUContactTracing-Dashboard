@@ -15,8 +15,8 @@ navbar:
           icon: fa-users
           href: BCT.html
   right:
-    - text: "Pogi link"
-      href: https://www.facebook.com/ArymCailing
+    - text: "Ganda link"
+      href: https://www.facebook.com/photo?fbid=2945074645537842&set=a.406695449375787
       icon: fa-info
 output_dir: "docs"
 output:
