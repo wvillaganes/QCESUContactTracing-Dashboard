@@ -1,0 +1,127 @@
+---
+title: "Quezon City Epidemiolgy and Surveillance Unit"
+author: 'Covid-19 Report and Analysis'
+---
+
+```{r setup,include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", echo = FALSE)
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(ggthemes)
+library(DT)
+library(readxl)
+source("New priority Script.R")
+today <- format(Sys.time(),"%m/%d/%Y %H:%M:%S")
+```
+
+## Monitoring of Reported Cases {.tabset}
+
+### Daily Count 
+
+Last refreshed date : `r today`
+
+- Total number of Reported Cases : `r Reported_count`
+  - Total number of Endorsed Cases to Field Team: `r Endorsed_count_d`
+  - Total Number of Out of City Cases : `r OZ_count_d`
+  - Total Number of Already Visited by CESU : `r Visited_count_d`
+  - Total Number of Pending : `r Pending_count_d`
+    - Confirmed cases : `r C_pending_count_d`
+    - Probable cases : `r P_pending_count_d`
+    - Suspect cases : `r S_pending_count_d`
+  - Total Number of Unable to contact : `r Unable_to_contact_d`
+    - Total Number of Wrong number : `r Wrong_number_d`
+    - Total Number of Cannot be reached : `r Cannot_be_reach_d`
+    - Total Number of Dropped call : `r Droppedcall_count_d`
+    - Total Number of Wrong person : `r Wrong_person_d`
+    - Total Number of Not answering the phone : `r NATPhone_d`
+  - Total number of confirmed cases with no number indicated: `r No_number_d`
+  
+Below is the cumulative count of reported cases today distributed by patient classification 
+```{r}
+NPC_classification <- NPC %>%
+  filter(`Report date` == Sys.Date()) %>% 
+  group_by(`Patient classification`) %>% 
+  count(name = "Count")
+
+DT::datatable(NPC_classification , rownames = FALSE,
+          filter = list(position = 'bottom', clear = FALSE, plain = TRUE),
+          options = list(autoWitdh =TRUE,
+                         columnDefs = list(list(className = 'dt-center',
+                                                targets = "_all"))))
+```
+  
+### Cumulative Count
+
+- Total number of Reported Cases : `r Reported_count_cumulative`
+  - Total number of Endorsed Cases to Field Team: `r Endorsed_count_cum`
+  - Total Number of Out of City Cases : `r OZ_count_cum`
+  - Total Number of Already Visited by CESU : `r Visited_count_cum`
+  - Total Number of Pending : `r Pending_count_cum`
+    - Confirmed cases : `r C_pending_count_cum`
+    - Probable cases : `r P_pending_count_cum`
+    - Suspect cases : `r S_pending_count_cum`
+  - Total Number of Unable to contact : `r Unable_to_contact_cum`
+    - Total Number of Wrong number : `r Wrong_number_cum`
+    - Total Number of Cannot be reached : `r Cannot_be_reach_cum`
+    - Total Number of Dropped call : `r Droppedcall_count_cum`
+    - Total Number of Wrong person : `r Wrong_person_cum`
+    - Total Number of Not answering the phone : `r NATPhone_cum`
+  - Total number of confirmed cases with no number indicated: `r No_number_cum`
+  
+Below is the cumulative count of cases distributed by patient classification since January 17, 2021
+```{r}
+NPC_classification <- NPC %>%
+  group_by(`Patient classification`) %>% 
+  count(name = "Count")
+
+DT::datatable(NPC_classification , rownames = FALSE,
+          filter = list(position = 'bottom', clear = FALSE, plain = TRUE),
+          options = list(autoWitdh =TRUE,
+                         columnDefs = list(list(className = 'dt-center',
+                                                targets = "_all"))))
+```
+  
+
+## Output of Phone Contact Tracers {.tabset}
+
+### Confirmed cases per barangay
+
+Cumulative number of Covid-19 cases per Barangay
+```{r, echo = FALSE}
+NPC_bgry_table <- NPC %>% 
+  group_by(Barangay) %>% 
+  summarise(Count = sum(n()), .groups = "drop") %>% 
+  arrange(desc(Count))
+
+DT::datatable(NPC_bgry_table, rownames = FALSE,
+          filter = list(position = 'bottom', clear = FALSE, plain = TRUE),
+          options = list(autoWitdh =TRUE,
+                         columnDefs = list(list(className = 'dt-center',
+                                                targets = "_all"))))
+```
+
+### Type of exposure
+
+Top 10 Covid-19 Cases exposure collected by phone tracers for past 14 days
+
+```{r}
+NPC_exposure <- NPC %>%
+  filter(`Report date` >= Sys.Date() - 14, `Type of exposure` != "UTC",
+         `Type of exposure` != "match not found",
+         !str_detect(Remarks, "UNABLE")) %>%
+  select(`Type of exposure`) %>%
+  group_by(`Type of exposure`) %>%
+  summarise('Count' = sum(n()), .groups = "drop") %>% 
+  arrange(desc(`Count`))
+
+DT::datatable(NPC_exposure, rownames = FALSE,
+          filter = list(position = 'bottom', clear = FALSE, plain = TRUE),
+          colnames = c("Exposure type","Count"),
+          options = list(autoWitdh =TRUE, columnDefs = list(list(className = 'dt-center',
+                                                targets = "_all"))))
+```
+```{r}
+rm(list = ls())
+```

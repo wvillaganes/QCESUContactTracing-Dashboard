@@ -1,0 +1,22 @@
+#TOC {
+  color: #708090;
+  font-family: Calibri;
+  font-size: 16px;
+  border-color: #708090;
+}
+h1.title {
+  color: #0D9C06;
+  font-family: Calibri;
+  font-size: 40px;
+  text-align: center;
+}
+h4.author {
+  font-family: Calibri;
+  text-align: center;
+}
+body {
+  font-size: 14px;
+}
+td {
+  font-size: 12px;
+}

@@ -1,0 +1,29 @@
+name: "QCESU Covid-19 Contact tracing"
+navbar:
+  title: "QCESU"
+  left:
+    - text: "Monitoring"
+      icon: fa-eye
+      href: index.html
+    - text: "Contact tracers Performance"
+      icon: fa-heart
+      menu:
+        - text: "Community Contact tracers"
+          icon: fa-users
+          href: CCT.html
+        - text: "Barangay Contact tracers"
+          icon: fa-users
+          href: BCT.html
+  right:
+    - text: "Pogi link"
+      href: https://www.facebook.com/ArymCailing
+      icon: fa-info
+output_dir: "docs"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+    toc_depth: 6
+    css: style.css

@@ -1,0 +1,8 @@
+---
+title: "Quezon City Epidemiolgy and Surveillance Unit"
+author: 'Covid-19 Report and Analysis'
+---
+
+```{r setup,include=FALSE}
+knitr::opts_chunk$set(fig.align = "center", echo = FALSE)
+```
