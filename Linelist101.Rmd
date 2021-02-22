@@ -1,0 +1,91 @@
+---
+title: "Data Reconciliation Report"
+author: "DOH linelist vs CESU linelist summary"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(ggthemes)
+library(DT)
+library(readxl)
+source("Linelist script.R")
+
+```
+
+
+```{r fig.width=10, echo=FALSE}
+reported_cases_table <- ll %>% 
+  group_by(report_date) %>% 
+  summarise(Cases = sum(n()), .groups = "drop") 
+
+average_count = round(mean(reported_cases_table$Cases),0)
+
+ggplot(reported_cases_table, aes(x = report_date, y = Cases)) +
+  geom_col(fill = "blue") +
+  geom_text(aes(label = Cases), vjust = -0.5) +
+  scale_x_date(date_breaks = "1 day", date_labels = "%Y-%m-%d") +
+  labs(title = paste0("NUMBER OF DOH REPORTED CASES PER DAY ( Average Daily Cases = ", average_count," )"),
+       x = "Report date",
+       y = "Count of Cases") +
+  theme_classic() + theme(axis.text.x = element_text(angle = 45, hjust = 1),
+                          plot.title = element_text(hjust = 0.5))
+
+beginning_date <- min(ll$report_date)
+up_to_date <- max(ll$report_date)
+```
+
+## REPORT DETAILS
+
+DATE OF REPORT : `r beginning_date` - `r up_to_date`
+
+
+- TOTAL NUMBER OF REPORTED CASE: `r total_reported_cases`
+  - Total number of cases found on CESU linelist: `r mdb_found_count`
+    - Number of verified cases: `r v_count`
+    - Number of unverified cases: `r to_input_mdb`
+      - Tagged as Investigated by District NPC encoders:
+        - Number of cases already field traced: `r investigated_1stbd_ft`
+        - Number of cases endorsed to other city: `r investigated_1stbd_ETOC`
+        - Number of cases endorsed to other district: `r investigated_1stbd_ETOD`
+        - Number of cases tagged as non-resident: `r investigated_1stbd_NR`
+        - Number of cases unable to locate: `r investigated_1stbd_UTL`
+        - Number of cases without remark: `r investigated_1stbd_No_remark`
+        - Number of duplicate cases: `r investigated_1stbd_DC`
+      - Count of cases still in under field investigation : `r notinvestigated_1st`
+      
+      
+- Balance : `r balance`
+
+
+  - Total number of cases found on New Priority Case repository: `r found_on_npc`
+    - Count of cases tagged as out of city area : `r OZ_count_npc`
+    - Other tagging: 
+      -   suspect pending: `r suspect_pending_npc `
+      -   Already in CESU line list: `r AIMDB_npc`
+      -   Unable to contact: `r UTC_npc`
+      - Count of cases endorsed to field team: `r RFHH_npc`
+        - Tagged as Investigated by District NPC encoders:
+          - Number of cases already field traced: `r investigated_2ndbd_ft`
+          - Number of cases endorsed to other city: `r investigated_2ndbd_ETOC`
+          - Number of cases endorsed to other district: `r investigated_2ndbd_ETOD`
+          - Number of cases tagged as non-resident: `r investigated_2nd_NR`
+          - Number of cases unable to locate: `r investigated_2ndbd_UTL`
+          - Number of cases without remark: `r investigated_2ndbd_No_remark`
+          - Number of duplicate cases: `r investigated_2ndbd_DC`
+        - Count of on-going field investigation : `r notinvestigated_2nd`
+      
+      
+- Discrepancy : `r discrepancy`
+      
+  
+      
+
+
+    
+    
+
+

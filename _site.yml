@@ -2,18 +2,24 @@ name: "QCESU Covid-19 Contact tracing"
 navbar:
   title: "QCESU"
   left:
-    - text: "Monitoring"
+    - text: "Overview"
       icon: fa-eye
       href: index.html
     - text: "Contact tracers Performance"
       icon: fa-heart
       menu:
+        - text: "Phone Contact tracers"
+          icon: fa-phone
+          href: index.html
         - text: "Community Contact tracers"
           icon: fa-users
           href: CCT.html
         - text: "Barangay Contact tracers"
           icon: fa-users
           href: BCT.html
+    - text: "Data Reconciliation"
+      icon: fa-list-alt
+      href: Linelist101.html
   right:
     - text: "Ganda link"
       href: https://www.facebook.com/photo?fbid=2945074645537842&set=a.406695449375787
