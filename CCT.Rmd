@@ -4,6 +4,14 @@ title: "Community Contact tracing"
 
 ```{r setup,include=FALSE}
 knitr::opts_chunk$set(fig.align = "center", echo = FALSE)
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(ggthemes)
+library(DT)
+library(readxl)
+source("CCT script.R")
 
 ```
 
@@ -11,4 +19,30 @@ knitr::opts_chunk$set(fig.align = "center", echo = FALSE)
   about page
   
 ## Performance
-  performance page
+  
+  
+```{r}
+summary_graph <- CCT %>% 
+  group_by(Timestamp, `REPORTING OF`) %>% 
+  summarise(`Count of reported cases` = sum(n()), .groups = "drop") %>% 
+  pivot_wider(names_from = `REPORTING OF`, values_from = `Count of reported cases`) %>%
+  mutate_at(vars(-Timestamp), ~replace_na(., 0)) %>% 
+  relocate(`ACTIVE SURVEILLANCE - PROBABLE`, .after = Timestamp) %>% 
+  mutate('DAILY TOTAL' = `ACTIVE SURVEILLANCE - PROBABLE` +
+                             `ACTIVE SURVEILLANCE - SUSPECT` +
+                             `CODE - CLOSE CONTACT` +
+                             `CODE - HIGH RISK` + `CODE - SUSPECT` +
+                             `CODE - PROBABLE`) %>% 
+  arrange(desc(Timestamp))
+
+DT::datatable(summary_graph , rownames = FALSE,
+              class = 'cell-border stripe',
+              colnames = c("Report date","AS-Probable", "AS-Suspect",
+                           "Close contact","High risk", "Suspect", "Probable",
+                           "Daily total"),
+              options = list(autoWitdh =TRUE,
+                             columnDefs = list(list(className = 'dt-center',
+                                                    targets = "_all"))))
+```
+  
+  

@@ -31,7 +31,7 @@ Last refreshed date : `r today`
     - Probable cases : `r P_pending_count_d`
     - Suspect cases : `r S_pending_count_d`
   - Total Number of Unable to contact : `r Unable_to_contact_d`
-    - Total Number of Wrong number : `r Wrong_number_d`
+    - Count of Wrong number : `r Wrong_number_d`
     - Total Number of Cannot be reached : `r Cannot_be_reach_d`
     - Total Number of Dropped call : `r Droppedcall_count_d`
     - Total Number of Wrong person : `r Wrong_person_d`
@@ -55,15 +55,15 @@ DT::datatable(NPC_classification , rownames = FALSE,
 ### Cumulative Count
 
 - Total number of Reported Cases : `r Reported_count_cumulative`
-  - Total number of Endorsed Cases to Field Team: `r Endorsed_count_cum`
-  - Total Number of Out of City Cases : `r OZ_count_cum`
-  - Total Number of Already Visited by CESU : `r Visited_count_cum`
-  - Total Number of Pending : `r Pending_count_cum`
+  -  Number of confirmed Cases 'Endorsed  to Field Team' : `r Endorsed_count_cum`
+  -  Number of 'Out of City' confirmed Cases : `r OZ_count_cum`
+  -  Number of confirmed cases 'Already Visited by CESU' : `r Visited_count_cum`
+  -  Number of Pending : `r Pending_count_cum`
     - Confirmed cases : `r C_pending_count_cum`
     - Probable cases : `r P_pending_count_cum`
     - Suspect cases : `r S_pending_count_cum`
   - Total Number of Unable to contact : `r Unable_to_contact_cum`
-    - Total Number of Wrong number : `r Wrong_number_cum`
+    - Count of Wrong number : `r Wrong_number_cum`
     - Total Number of Cannot be reached : `r Cannot_be_reach_cum`
     - Total Number of Dropped call : `r Droppedcall_count_cum`
     - Total Number of Wrong person : `r Wrong_person_cum`

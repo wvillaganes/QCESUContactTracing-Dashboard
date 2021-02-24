@@ -42,9 +42,12 @@ Unable_to_contact_d = sum(str_detect(NPC_dashboard_daily$Remarks,"UNABLE"))
 
 Reported_count_cumulative = nrow(NPC)
 
-Endorsed_count_cum = sum(str_detect(NPC$Remarks, "REQUEST"))
-OZ_count_cum = sum(str_detect(NPC$Remarks, "OUT OF CITY"))
-Visited_count_cum = sum(str_detect(NPC$Remarks, "VISITED"))
+Endorsed_count_cum = sum(str_detect(NPC$Remarks, "REQUEST") &
+                           str_detect(NPC$`Patient classification`, "CONFIRMED"))
+OZ_count_cum = sum(str_detect(NPC$Remarks, "OUT OF CITY") &
+                     str_detect(NPC$`Patient classification`, "CONFIRMED"))
+Visited_count_cum = sum(str_detect(NPC$Remarks, "VISITED") &
+                          str_detect(NPC$`Patient classification`, "CONFIRMED"))
 Pending_count_cum = sum(str_detect(NPC$Remarks, "match not found"), na.rm = TRUE)
 C_pending_count_cum = sum(str_detect(NPC$Remarks,"match not found") &
                             str_detect(NPC$`Patient classification`, "CONFIRMED"), na.rm = TRUE)
